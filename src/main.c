@@ -12,9 +12,9 @@ int main(void)
 	if (process_id < 0)
 		cleanup_exit(FORK_ERROR);
 	if (process_id == 0)
-		printf("hello from main process\n");
-	else
 		printf("hello from child process\n");
+	else
+		printf("hello from main process\n");
 }
 
 static void cleanup_exit(t_error error)
