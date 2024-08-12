@@ -1,6 +1,6 @@
-#include "libft/ft_io.h"
+#include <unistd.h>
 
 int main(void)
 {
-	ft_putstr("hi\n");
+	execl("ls", (char const* const)"-a", NULL);
 }
