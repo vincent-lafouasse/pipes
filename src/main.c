@@ -10,14 +10,29 @@ static void cleanup_exit(t_error error);
 
 int main(void)
 {
-	int process_id = fork();
+	int fd[2];
+	if (pipe(fd) < 0)
+		cleanup_exit(PIPE_ERROR);
 
-	if (process_id < 0)
-		cleanup_exit(FORK_ERROR);
+	int process_id = fork();
 	if (process_id == 0)
-		printf("hello from child process\n");
+	{
+		close(fd[READ]);
+		int x = 69;
+		printf("sending %d to child process\n", x);
+		fflush(stdout);
+		write(fd[WRITE], &x, sizeof(x));
+		close(fd[WRITE]);
+	}
 	else
-		printf("hello from main process\n");
+	{
+		close(fd[WRITE]);
+		int y;
+		printf("receiving a number from parent process: ");
+		read(fd[READ], &y, sizeof(y));
+		printf("%d\n", y);
+		close(fd[READ]);
+	}
 }
 
 static void cleanup_exit(t_error error)
