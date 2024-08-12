@@ -3,7 +3,10 @@
 
 int main(void)
 {
-	int pid = fork();
+	int process_id = fork();
 
-	printf("hello from %d\n", pid);
+	if (process_id == 0)
+		printf("hello from main process\n");
+	else
+		printf("hello from child process\n");
 }
