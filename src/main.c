@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include "error/t_error.h"
 
+#define READ 0
+#define WRITE 1
+
 static void cleanup_exit(t_error error);
 
 int main(void)
