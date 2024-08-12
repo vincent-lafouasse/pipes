@@ -7,4 +7,4 @@ target
 local*
 *.a
 **/exec*
-push_swap
+pipex
