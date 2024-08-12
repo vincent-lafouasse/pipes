@@ -1,6 +1,9 @@
 #include <unistd.h>
+#include <stdio.h>
 
 int main(void)
 {
-	execl("ls", (char const* const)"-a", NULL);
+	int pid = fork();
+
+	printf("hello from %d\n", pid);
 }
