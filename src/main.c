@@ -8,6 +8,21 @@
 
 static void cleanup_exit(t_error error);
 
+static void send(int fd[2], int x)
+{
+	printf("sending %d to child process\n", x);
+	fflush(stdout);
+	write(fd[WRITE], &x, sizeof(x));
+}
+
+static void receive(int fd[2])
+{
+	int y;
+	printf("receiving a number from parent process: ");
+	read(fd[READ], &y, sizeof(y));
+	printf("%d\n", y);
+}
+
 int main(void)
 {
 	int fd[2];
@@ -18,19 +33,13 @@ int main(void)
 	if (process_id == 0)
 	{
 		close(fd[READ]);
-		int x = 69;
-		printf("sending %d to child process\n", x);
-		fflush(stdout);
-		write(fd[WRITE], &x, sizeof(x));
+		send(fd, 69);
 		close(fd[WRITE]);
 	}
 	else
 	{
 		close(fd[WRITE]);
-		int y;
-		printf("receiving a number from parent process: ");
-		read(fd[READ], &y, sizeof(y));
-		printf("%d\n", y);
+		receive(fd);
 		close(fd[READ]);
 	}
 }
