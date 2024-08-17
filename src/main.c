@@ -21,6 +21,8 @@ int main(int ac, char** av, char** env)
 	(void)ac;
 	(void)av;
 
+	char* args[] = {"-l", NULL};
+
 	execve("/bin/ls", args, env);
 }
 
