@@ -4,6 +4,7 @@
 #include "error/t_error.h"
 #include "env/t_env.h"
 #include "log/log.h"
+#include "libft/ft_string.h"
 
 typedef struct s_command {
 	const char* location;
@@ -12,10 +13,31 @@ typedef struct s_command {
 	int out_fd;
 } t_command;
 
+char* full_path(const char* dir, const char* file)
+{
+	char* dir_with_slash;
+	char* path;
+
+	if (!dir || !file)
+		return NULL;
+	dir_with_slash = ft_strjoin(dir, "/");
+	if (!dir_with_slash)
+		return NULL;
+	path = ft_strjoin(dir_with_slash, file);
+	if (!path)
+		return NULL;
+	free(dir_with_slash);
+	return NULL;
+}
+
 char* locate_command(const char* name, const t_env* env)
 {
-	(void)name;
-	(void)env;
+	char* candidate;
+
+	while (env->path)
+	{
+		//candidate = ft_strjoin()
+	}
 	return NULL;
 }
 
