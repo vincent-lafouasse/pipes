@@ -74,15 +74,15 @@ static char** duplicate_args(char** args, size_t n_args, char* name)
 	out[0] = ft_strdup(name);
 	if (!out[0])
 		return free(out), NULL;
-	i = 1;
+	i = 0;
 	while (i < n_args)
 	{
-		out[i] = ft_strdup(args[i]);
-		if (!out[i])
-			return free_str_array(out, i), NULL;
+		out[i + 1] = ft_strdup(args[i]);
+		if (!out[i + 1])
+			return free_str_array(out, i + 1), NULL;
 		i++;
 	}
-	out[i] = NULL;
+	out[n_args + 1] = NULL;
 	return out;
 }
 
