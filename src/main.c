@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <sys/fcntl.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 static void	cleanup(t_pipex *pipex, t_files *files);
 static void	cleanup_exit(t_pipex *pipex, t_files *files, t_error error);
