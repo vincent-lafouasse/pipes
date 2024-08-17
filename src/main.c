@@ -33,6 +33,7 @@ int main(int ac, char** av, char** sys_env)
 		cleanup_exit(err);
 
 	log_cmd(&cmd);
+	execve(cmd.location, cmd.args, sys_env);
 	/*
 	char* command_name = av[1];
 	char** args = av + 2;
