@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 00:10:37 by poss              #+#    #+#             */
-/*   Updated: 2024/08/17 13:55:37 by poss             ###   ########.fr       */
+/*   Updated: 2024/08/17 14:44:02 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ enum e_error
 	NO_ERROR,
 	FORK_ERROR,
 	PIPE_ERROR,
+	NULL_PARAM_ERROR,
 	DUMMY_ERROR,
 
 };
