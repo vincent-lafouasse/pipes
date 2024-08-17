@@ -8,3 +8,4 @@ typedef struct s_env {
 } t_env;
 
 t_error load_env(char** sys_env, t_env* env);
+void cleanup_env(t_env* env);
