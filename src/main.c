@@ -11,6 +11,9 @@
 
 #include <fcntl.h>
 
+#define READ 0
+#define WRITE 1
+
 typedef struct s_io_files
 {
 	int in_fd;
@@ -92,25 +95,28 @@ static void cleanup_exit(t_pipex* pipex, t_io_files* files, t_error error);
 int main(int ac, char** av, char** sys_env)
 {
 	t_pipex pipex;
+	t_io_files files;
+	pid_t pid;
 	t_error err;
 
 	err = load_pipex_input(ac, av, sys_env, &pipex);
 	if (err != NO_ERROR)
 		cleanup_exit(&pipex, NULL, err);
 
-	t_io_files files;
 	err = open_files(pipex.infile, pipex.outfile, &files);
 	if (err != NO_ERROR)
 		cleanup_exit(&pipex, NULL, err);
 
-	pid_t pid = fork();
+	pid = fork();
 	if (pid == 0)
 	{
+		close(files.pipe[READ]);
 		dup2(files.in_fd, STDIN_FILENO);
 		execve(pipex.cmd1->location, pipex.cmd1->args, sys_env);
 	}
 	else
 	{
+		close(files.pipe[WRITE]);
 		wait(NULL);
 		printf("\n");
 		dup2(files.out_fd, STDOUT_FILENO);
