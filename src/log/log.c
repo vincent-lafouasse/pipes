@@ -26,3 +26,19 @@ void log_env(const t_env* env)
 		i++;
 	}
 }
+
+void log_cmd(const t_command* cmd)
+{
+	if (!cmd)
+		return;
+	printf("path:\n%s\n", cmd->location);
+	printf("args:\n");
+	if (!cmd->args)
+	{
+		printf("None\n");
+		return;
+	}
+
+	for (int i = 0; cmd->args[i] != NULL; i++)
+		printf("%s\n", cmd->args[i]);
+}
