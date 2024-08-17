@@ -41,17 +41,20 @@ int main(int ac, char** av, char** sys_env)
 		close(files.pipe[WRITE]);
 		execve(pipex.cmd1->location, pipex.cmd1->args, sys_env);
 	}
-	else
+	
+	pid[1] = fork();
+	if (pid[1] == 0)
 	{
 		close(files.pipe[WRITE]);
 		dup2(files.out_fd, STDOUT_FILENO);
 		close(files.out_fd);
 		dup2(files.pipe[READ], STDIN_FILENO);
 		close(files.pipe[READ]);
-		wait(NULL);
-		printf("\n");
 		execve(pipex.cmd2->location, pipex.cmd2->args, sys_env);
 	}
+
+	close(files.pipe[0]);
+	close(files.pipe[1]);
 	cleanup(&pipex, &files);
 }
 
