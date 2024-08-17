@@ -30,7 +30,7 @@ char* full_path(const char* dir, const char* file)
 	return path;
 }
 
-char* locate_command(const char* name, const t_env* env)
+t_error locate_command(const char* name, const t_env* env, char** cmd_out)
 {
 	char* candidate;
 	char* dir;
@@ -41,12 +41,14 @@ char* locate_command(const char* name, const t_env* env)
 	while (dir)
 	{
 		candidate = full_path(dir, name);
+		if (!candidate)
+			return OOM_ERROR;
 		printf("%s\n", candidate);
 		free(candidate);
 		dir = env->path[++i];
 	}
 	printf("bbbbbbbbbbbbbbbbbbbbbbbbbhh");
-	return NULL;
+	return FILE_NOT_FOUND_ERROR;
 }
 
 static void cleanup_exit(t_error error);
@@ -64,7 +66,10 @@ int main(int ac, char** av, char** sys_env)
 
 	char* command_name = "ls";
 	char* args[] = {"-l", NULL};
-	char* command_location = locate_command(command_name, &env);
+	char* command_location;
+	err = locate_command(command_name, &env, &command_location);
+	if (err != NO_ERROR)
+		cleanup_exit(err);
 
 	if (execve("/bin/ls", args, sys_env) == -1)
 		cleanup_exit(DUMMY_ERROR);
