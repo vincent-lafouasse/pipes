@@ -2,7 +2,6 @@
 
 #include "error/t_error.h"
 #include "env/t_env.h"
-#include "libft/types.h"
 
 typedef struct s_command {
 	char* location;
@@ -11,5 +10,5 @@ typedef struct s_command {
 	int out_fd;
 } t_command;
 
-t_error load_command(char* name, char** args, size_t n_args, const t_env* env,t_command* cmd_out);
+t_error load_command(const char* command, const t_env* env, t_command* cmd_out);
 t_error exec_command(void);
