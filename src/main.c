@@ -61,14 +61,17 @@ int main(int ac, char** av, char** sys_env)
 
 static void cleanup(t_pipex* pipex, t_files* files)
 {
-	(void)pipex;
-	(void)files;
+	if (pipex)
+		cleanup_pipex_input(pipex);
+	if (files)
+		close_files(files);
 }
 
 static void cleanup_exit(t_pipex* pipex, t_files* files, t_error error)
 {
 	cleanup(pipex, files);
-	ft_putstr_fd("Error:\n", 2);
-	ft_putstr_fd(error_repr(error), 2);
+	ft_putstr_fd("Error:\n", STDERR_FILENO);
+	ft_putstr_fd(error_repr(error), STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
