@@ -86,6 +86,7 @@ int main(int ac, char** av, char** sys_env)
 	t_command cmd;
 	load_command(av[1], &env, &cmd);
 	
+	execve(cmd.location, cmd.args, sys_env);
 }
 
 static void cleanup(void)
