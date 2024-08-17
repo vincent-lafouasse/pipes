@@ -1,2 +1,3 @@
 # pipex
-# pipex
+
+a project about pipes
