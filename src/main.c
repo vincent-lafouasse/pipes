@@ -59,7 +59,6 @@ static void cleanup_exit(t_error error);
 
 int main(int ac, char** av, char** sys_env)
 {
-	(void)ac;
 	t_pipex pipex;
 	t_error err;
 
@@ -67,10 +66,18 @@ int main(int ac, char** av, char** sys_env)
 	if (err != NO_ERROR)
 		cleanup_exit(err);
 
-	log_cmd(pipex.cmd1);
-	log_cmd(pipex.cmd2);
+	pid_t pid = fork();
 
-	execve(pipex.cmd1->location, pipex.cmd1->args, sys_env);
+	if (pid == 0)
+	{
+		execve(pipex.cmd1->location, pipex.cmd1->args, sys_env);
+	}
+	else
+	{
+		wait(NULL);
+		printf("\n");
+		execve(pipex.cmd2->location, pipex.cmd2->args, sys_env);
+	}
 	/*
 	char* command_name = av[1];
 	char** args = av + 2;
