@@ -11,3 +11,4 @@ typedef struct s_pipex {
 } t_pipex;
 
 t_error load_pipex_input(int ac, char** av, char** sys_env, t_pipex* out);
+void cleanup_pipex_input(t_pipex* pipex);
