@@ -6,9 +6,7 @@
 typedef struct s_command {
 	char* location;
 	char** args;
-	int in_fd;
-	int out_fd;
 } t_command;
 
 t_error load_command(const char* command, const t_env* env, t_command* cmd_out);
-t_error exec_command(void);
+void cleanup_command(t_command* command);
