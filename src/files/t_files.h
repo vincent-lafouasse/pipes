@@ -10,3 +10,5 @@ typedef struct s_files
 } t_files;
 
 t_error open_files(const char* infile, const char* outfile, t_files* files);
+void close_files(t_files* files);
+void close_fd(int* fd);
