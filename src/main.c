@@ -3,45 +3,25 @@
 #include <stdlib.h>
 #include "error/t_error.h"
 
-#define READ 0
-#define WRITE 1
+typedef struct s_env {
+	const char** raw_env;
+	const char* bin;
+	const char** bin_dirs;
+} t_env;
+
+typedef struct s_command {
+	const char** name;
+	const t_env* env;
+} t_command;
 
 static void cleanup_exit(t_error error);
 
-static void send(int fd[2], int x)
+int main(int ac, char** av, char** env)
 {
-	printf("sending %d to child process\n", x);
-	fflush(stdout);
-	write(fd[WRITE], &x, sizeof(x));
-}
+	(void)ac;
+	(void)av;
 
-static void receive(int fd[2])
-{
-	int y;
-	printf("receiving a number from parent process: ");
-	read(fd[READ], &y, sizeof(y));
-	printf("%d\n", y);
-}
-
-int main(void)
-{
-	int fd[2];
-	if (pipe(fd) < 0)
-		cleanup_exit(PIPE_ERROR);
-
-	int process_id = fork();
-	if (process_id == 0)
-	{
-		close(fd[READ]);
-		send(fd, 69);
-		close(fd[WRITE]);
-	}
-	else
-	{
-		close(fd[WRITE]);
-		receive(fd);
-		close(fd[READ]);
-	}
+	execve("/bin/ls", args, env);
 }
 
 static void cleanup_exit(t_error error)
