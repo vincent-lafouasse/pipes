@@ -59,6 +59,7 @@ static void cleanup_exit(t_error error);
 
 int main(int ac, char** av, char** sys_env)
 {
+	/*
 	t_pipex pipex;
 	t_error err;
 
@@ -78,17 +79,13 @@ int main(int ac, char** av, char** sys_env)
 		printf("\n");
 		execve(pipex.cmd2->location, pipex.cmd2->args, sys_env);
 	}
-	/*
-	char* command_name = av[1];
-	char** args = av + 2;
-	char* command_location;
-	err = locate_command(command_name, &env, &command_location);
-	if (err != NO_ERROR)
-		cleanup_exit(err);
-
-	if (execve(command_location, args, sys_env) == -1)
-		cleanup_exit(DUMMY_ERROR);
 	*/
+	t_env env;
+	load_env(sys_env, &env);
+
+	t_command cmd;
+	load_command(av[1], &env, &cmd);
+	
 }
 
 static void cleanup(void)
