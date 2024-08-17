@@ -27,17 +27,25 @@ char* full_path(const char* dir, const char* file)
 	if (!path)
 		return NULL;
 	free(dir_with_slash);
-	return NULL;
+	return path;
 }
 
 char* locate_command(const char* name, const t_env* env)
 {
 	char* candidate;
+	char* dir;
+	int i = 0;
 
-	while (env->path)
+	dir = env->path[0];
+	printf("hhhhhhhhhhhhhhhhhhhhhhhhhhh");
+	while (dir)
 	{
-		//candidate = ft_strjoin()
+		candidate = full_path(dir, name);
+		printf("%s\n", candidate);
+		free(candidate);
+		dir = env->path[++i];
 	}
+	printf("bbbbbbbbbbbbbbbbbbbbbbbbbhh");
 	return NULL;
 }
 
@@ -53,7 +61,6 @@ int main(int ac, char** av, char** sys_env)
 	err = load_env((const char**)sys_env, &env);
 	if (err != NO_ERROR)
 		cleanup_exit(err);
-	log_env(&env);
 
 	char* command_name = "ls";
 	char* args[] = {"-l", NULL};
