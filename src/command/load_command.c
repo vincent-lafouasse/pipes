@@ -8,7 +8,7 @@
 static char* full_path(const char* dir, const char* file);
 static t_error locate_command(const char* name, const t_env* env, char** cmd_out);
 static void free_str_array(char** arr, size_t n);
-static char** duplicate_args(char** args, size_t n_args);
+static char** duplicate_args(char** args, size_t n_args, char* name);
 
 t_error load_command(char* name, char** args, size_t n_args, const t_env* env,t_command* cmd_out)
 {
@@ -17,7 +17,7 @@ t_error load_command(char* name, char** args, size_t n_args, const t_env* env,t_
 	err = locate_command(name, env, &cmd_out->location);
 	if (err != NO_ERROR)
 		return err;
-	cmd_out->args = duplicate_args(args, n_args);
+	cmd_out->args = duplicate_args(args, n_args, name);
 	if (cmd_out->args == NULL)
 		return OOM_ERROR;
 	return NO_ERROR;
@@ -63,23 +63,23 @@ static char* full_path(const char* dir, const char* file)
 	return path;
 }
 
-static char** duplicate_args(char** args, size_t n_args)
+static char** duplicate_args(char** args, size_t n_args, char* name)
 {
 	char** out;
 	size_t i;
 
-	out = malloc((1 + n_args) * sizeof(char*));
+	out = malloc((2 + n_args) * sizeof(char*));
 	if (!out)
 		return NULL;
-	i = 0;
+	out[0] = ft_strdup(name);
+	if (!out[0])
+		return free(out), NULL;
+	i = 1;
 	while (i < n_args)
 	{
 		out[i] = ft_strdup(args[i]);
 		if (!out[i])
-		{
-			free_str_array(out, i);
-			return NULL;
-		}
+			return free_str_array(out, i), NULL;
 		i++;
 	}
 	out[i] = NULL;
