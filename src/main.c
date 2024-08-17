@@ -3,29 +3,7 @@
 #include <stdlib.h>
 #include "error/t_error.h"
 #include "env/t_env.h"
-#include "log/log.h"
-#include "libft/ft_string.h"
-
-typedef struct s_command {
-	char* location;
-	char** args;
-	int in_fd;
-	int out_fd;
-} t_command;
-
-char* full_path(const char* dir, const char* file);
-t_error locate_command(const char* name, const t_env* env, char** cmd_out);
-
-t_error load_command(char* name, char** args, const t_env* env,t_command* cmd_out)
-{
-	t_error err;
-
-	err = locate_command(name, env, &cmd_out->location);
-	if (err != NO_ERROR)
-		return err;
-	cmd_out->args = args;
-	return NO_ERROR;
-}
+#include "command/t_command.h"
 
 static void cleanup_exit(t_error error);
 
@@ -36,10 +14,18 @@ int main(int ac, char** av, char** sys_env)
 	t_env env;
 	t_error err;
 
+	if (ac == 1)
+		return 0;
+
 	err = load_env((const char**)sys_env, &env);
 	if (err != NO_ERROR)
 		cleanup_exit(err);
 
+	if (ac == 2)
+		err = load_command(av[1], NULL, &env, &cmd);
+	else
+		err = load_command(av[1], av + 2, &env, &cmd);
+	/*
 	char* command_name = av[1];
 	char** args = av + 2;
 	char* command_location;
@@ -49,50 +35,11 @@ int main(int ac, char** av, char** sys_env)
 
 	if (execve(command_location, args, sys_env) == -1)
 		cleanup_exit(DUMMY_ERROR);
+	*/
 }
 
 static void cleanup_exit(t_error error)
 {
 	(void)error;
 	exit(EXIT_FAILURE);
-}
-
-char* full_path(const char* dir, const char* file)
-{
-	char* dir_with_slash;
-	char* path;
-
-	if (!dir || !file)
-		return NULL;
-	dir_with_slash = ft_strjoin(dir, "/");
-	if (!dir_with_slash)
-		return NULL;
-	path = ft_strjoin(dir_with_slash, file);
-	if (!path)
-		return NULL;
-	free(dir_with_slash);
-	return path;
-}
-
-t_error locate_command(const char* name, const t_env* env, char** cmd_out)
-{
-	char* candidate;
-	char* dir;
-	int i = 0;
-
-	dir = env->path[0];
-	while (dir)
-	{
-		candidate = full_path(dir, name);
-		if (!candidate)
-			return OOM_ERROR;
-		if (access(candidate, X_OK) == 0)
-		{
-			*cmd_out = candidate;
-			return NO_ERROR;
-		}
-		free(candidate);
-		dir = env->path[++i];
-	}
-	return FILE_NOT_FOUND_ERROR;
 }
