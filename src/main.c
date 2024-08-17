@@ -26,13 +26,19 @@ t_error load_pipex_input(int ac, char** av, char** sys_env, t_pipex* out)
 	out->outfile = av[4];
 	out->cmd1 = NULL;
 	out->cmd2 = NULL;
+	err = load_env((const char**)sys_env, &out->env);
+	if (err != NO_ERROR)
+		return err;
 	out->cmd1 = malloc(sizeof(*out->cmd1));
 	if (!out->cmd1)
 		return OOM_ERROR;
+	err = load_command(av[2], &out->env, out->cmd1);
+	if (err != NO_ERROR)
+		return err;
 	out->cmd2 = malloc(sizeof(*out->cmd2));
 	if (!out->cmd2)
 		return OOM_ERROR;
-	return NO_ERROR;
+	return load_command(av[3], &out->env, out->cmd2);
 }
 
 static void cleanup(void);
@@ -41,23 +47,17 @@ static void cleanup_exit(t_error error);
 int main(int ac, char** av, char** sys_env)
 {
 	(void)ac;
-	t_command cmd;
-	t_env env;
+	t_pipex pipex;
 	t_error err;
 
-	if (ac == 1)
-		return 0;
-
-	err = load_env((const char**)sys_env, &env);
+	err = load_pipex_input(ac, av, sys_env, &pipex);
 	if (err != NO_ERROR)
 		cleanup_exit(err);
 
-	err = load_command(av[1], av + 2, ac - 2, &env, &cmd);
-	if (err != NO_ERROR)
-		cleanup_exit(err);
+	log_cmd(pipex.cmd1);
+	log_cmd(pipex.cmd2);
 
-	log_cmd(&cmd);
-	execve(cmd.location, cmd.args, sys_env);
+	execve(pipex.cmd1->location, pipex.cmd1->args, sys_env);
 	/*
 	char* command_name = av[1];
 	char** args = av + 2;
