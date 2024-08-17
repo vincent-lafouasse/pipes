@@ -14,12 +14,7 @@ t_error load_command(const char* command, const t_env* env, t_command* cmd_out)
 
 	if (!command || !env || !cmd_out)
 		return NULL_PARAM_ERROR;
-	*cmd_out = (t_command){
-		.location = NULL,
-		.args = NULL,
-		.in_fd = STDIN_FILENO,
-		.out_fd = STDOUT_FILENO
-	};
+	*cmd_out = (t_command){.location = NULL, .args = NULL};
 	cmd_out->args = ft_split(command, ' ');
 	if (!cmd_out->args)
 		return OOM_ERROR;
