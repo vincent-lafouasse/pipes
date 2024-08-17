@@ -4,28 +4,34 @@
 #include "error/t_error.h"
 
 typedef struct s_env {
-	const char** raw_env;
-	const char* bin;
-	const char** bin_dirs;
+	const char** path;
 } t_env;
 
+t_env load_env(const char** raw_env);
+
 typedef struct s_command {
-	const char** name;
-	const t_env* env;
+	const char* location;
+	const char** args;
 	int in_fd;
 	int out_fd;
 } t_command;
 
+char* locate_command(const char* name, const t_env* env);
+
 static void cleanup_exit(t_error error);
 
-int main(int ac, char** av, char** env)
+int main(int ac, char** av, char** sys_env)
 {
 	(void)ac;
 	(void)av;
 
-	char* args[] = {"-l", NULL};
+	t_env env = load_env((const char**)sys_env);
 
-	if (execve("/bin/ls", args, env) == -1)
+	char* command_name = "ls";
+	char* args[] = {"-l", NULL};
+	char* command_location = locate_command(command_name, &env);
+
+	if (execve("/bin/ls", args, sys_env) == -1)
 		cleanup_exit(DUMMY_ERROR);
 }
 
