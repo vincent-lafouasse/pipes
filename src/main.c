@@ -33,7 +33,6 @@ int main(int ac, char** av, char** sys_env)
 	pid[0] = fork();
 	if (pid[0] == 0)
 	{
-		// child process 1
 		close(files.pipe[READ]);
 		dup2(files.in_fd, STDIN_FILENO);
 		close(files.in_fd);
@@ -55,6 +54,8 @@ int main(int ac, char** av, char** sys_env)
 
 	close(files.pipe[0]);
 	close(files.pipe[1]);
+	waitpid(pid[0], NULL, 0);
+	waitpid(pid[1], NULL, 0);
 	cleanup(&pipex, &files);
 }
 
