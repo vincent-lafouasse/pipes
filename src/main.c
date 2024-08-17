@@ -2,12 +2,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "error/t_error.h"
+#include "log/log.h"
 
 typedef struct s_env {
 	const char** path;
 } t_env;
 
-t_env load_env(const char** raw_env);
+int locate_path(const char** sys_env)
+{
+	int i = 0;
+
+	return i;
+}
+
+t_env load_env(const char** sys_env)
+{
+	t_env env;
+	int raw_path_index;
+
+	log_env(sys_env);
+	raw_path_index = locate_path(sys_env);
+
+	env.path = NULL;
+	return env;
+}
 
 typedef struct s_command {
 	const char* location;
@@ -16,7 +34,12 @@ typedef struct s_command {
 	int out_fd;
 } t_command;
 
-char* locate_command(const char* name, const t_env* env);
+char* locate_command(const char* name, const t_env* env)
+{
+	(void)name;
+	(void)env;
+	return NULL;
+}
 
 static void cleanup_exit(t_error error);
 
