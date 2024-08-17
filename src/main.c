@@ -6,6 +6,9 @@
 #include "log/log.h"
 #include "command/t_command.h"
 
+#include "libft/ft_io.h"
+
+static void cleanup(void);
 static void cleanup_exit(t_error error);
 
 int main(int ac, char** av, char** sys_env)
@@ -43,8 +46,13 @@ int main(int ac, char** av, char** sys_env)
 	*/
 }
 
+static void cleanup(void)
+{}
+
 static void cleanup_exit(t_error error)
 {
-	(void)error;
+	cleanup();
+	ft_putstr_fd("Error:\n", 2);
+	ft_putstr_fd(error_repr(error), 2);
 	exit(EXIT_FAILURE);
 }
