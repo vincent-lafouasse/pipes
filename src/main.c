@@ -8,6 +8,33 @@
 
 #include "libft/ft_io.h"
 
+typedef struct s_pipex {
+	t_command* cmd1;
+	t_command* cmd2;
+	char* infile;
+	char* outfile;
+	t_env env;
+} t_pipex;
+
+t_error load_pipex_input(int ac, char** av, char** sys_env, t_pipex* out)
+{
+	t_error err;
+
+	if (ac != 5)
+		return  BAD_N_ARGS_ERROR;
+	out->infile = av[1];
+	out->outfile = av[4];
+	out->cmd1 = NULL;
+	out->cmd2 = NULL;
+	out->cmd1 = malloc(sizeof(*out->cmd1));
+	if (!out->cmd1)
+		return OOM_ERROR;
+	out->cmd2 = malloc(sizeof(*out->cmd2));
+	if (!out->cmd2)
+		return OOM_ERROR;
+	return NO_ERROR;
+}
+
 static void cleanup(void);
 static void cleanup_exit(t_error error);
 
