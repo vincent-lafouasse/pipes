@@ -15,6 +15,7 @@ typedef struct s_io_files
 {
 	int in_fd;
 	int out_fd;
+	int pipe[2];
 } t_io_files;
 
 t_error open_files(const char* infile, const char* outfile, t_io_files* files)
@@ -24,7 +25,16 @@ t_error open_files(const char* infile, const char* outfile, t_io_files* files)
 		return DUMMY_ERROR;
 	files->out_fd = open(outfile, O_WRONLY | O_CREAT, 0777);
 	if (files->out_fd < 0)
-		return close(files->in_fd), DUMMY_ERROR;
+	{
+		close(files->in_fd);
+		return  DUMMY_ERROR;
+	}
+	if (pipe(files->pipe) == -1)
+	{
+		close(files->in_fd);
+		close(files->out_fd);
+		return  PIPE_ERROR;
+	}
 	return NO_ERROR;
 }
 
