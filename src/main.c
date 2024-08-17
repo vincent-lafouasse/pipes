@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "error/t_error.h"
 #include "log/log.h"
+#include "libft/ft_string.h"
 
 typedef struct s_env {
 	const char** path;
@@ -12,19 +13,26 @@ int locate_path(const char** sys_env)
 {
 	int i = 0;
 
-	return i;
+	while (sys_env[i])
+	{
+		if (ft_str_starts_with(sys_env[i], "PATH=") == true)
+			return i;
+		i++;
+	}
+	return -1;
 }
 
-t_env load_env(const char** sys_env)
+t_error load_env(const char** sys_env, t_env* env)
 {
-	t_env env;
 	int raw_path_index;
 
-	log_env(sys_env);
 	raw_path_index = locate_path(sys_env);
+	if (raw_path_index == -1)
+		return DUMMY_ERROR;
+	printf("%s\n", sys_env[raw_path_index]);
 
-	env.path = NULL;
-	return env;
+	env->path = NULL;
+	return NO_ERROR;
 }
 
 typedef struct s_command {
@@ -47,8 +55,12 @@ int main(int ac, char** av, char** sys_env)
 {
 	(void)ac;
 	(void)av;
+	t_env env;
+	t_error err;
 
-	t_env env = load_env((const char**)sys_env);
+	err = load_env((const char**)sys_env, &env);
+	if (err != NO_ERROR)
+		cleanup_exit(err);
 
 	char* command_name = "ls";
 	char* args[] = {"-l", NULL};
