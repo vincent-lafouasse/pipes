@@ -7,21 +7,32 @@
 #include "libft/ft_string.h"
 
 typedef struct s_command {
-	const char* location;
-	const char** args;
+	char* location;
+	char** args;
 	int in_fd;
 	int out_fd;
 } t_command;
 
 char* full_path(const char* dir, const char* file);
 t_error locate_command(const char* name, const t_env* env, char** cmd_out);
-t_error load_command(t_command* cmd_out);
+
+t_error load_command(char* name, char** args, const t_env* env,t_command* cmd_out)
+{
+	t_error err;
+
+	err = locate_command(name, env, &cmd_out->location);
+	if (err != NO_ERROR)
+		return err;
+	cmd_out->args = args;
+	return NO_ERROR;
+}
 
 static void cleanup_exit(t_error error);
 
 int main(int ac, char** av, char** sys_env)
 {
 	(void)ac;
+	t_command cmd;
 	t_env env;
 	t_error err;
 
