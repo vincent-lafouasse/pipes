@@ -1,23 +1,22 @@
-#include <sys/fcntl.h>
-#include <unistd.h>
+#include "command/t_command.h"
+#include "error/t_error.h"
+#include "files/t_files.h"
+#include "libft/ft_io.h"
+#include "t_pipex/t_pipex.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "error/t_error.h"
-#include "command/t_command.h"
-#include "t_pipex/t_pipex.h"
-#include "files/t_files.h"
+#include <sys/fcntl.h>
+#include <unistd.h>
 
-#include "libft/ft_io.h"
+static void	cleanup(t_pipex *pipex, t_files *files);
+static void	cleanup_exit(t_pipex *pipex, t_files *files, t_error error);
 
-static void cleanup(t_pipex* pipex, t_files* files);
-static void cleanup_exit(t_pipex* pipex, t_files* files, t_error error);
-
-int main(int ac, char** av, char** sys_env)
+int	main(int ac, char **av, char **sys_env)
 {
-	t_pipex pipex;
-	t_files files;
-	pid_t pid[2];
-	t_error err;
+	t_pipex	pipex;
+	t_files	files;
+	pid_t	pid[2];
+	t_error	err;
 
 	err = load_pipex_input(ac, av, sys_env, &pipex);
 	if (err != NO_ERROR)
@@ -35,7 +34,7 @@ int main(int ac, char** av, char** sys_env)
 		redirect((t_redirect){.from = STDOUT_FILENO, .to = files.pipe[WRITE]});
 		execve(pipex.cmd1->location, pipex.cmd1->args, sys_env);
 	}
-	
+
 	pid[1] = fork();
 	if (pid[1] == 0)
 	{
@@ -52,7 +51,7 @@ int main(int ac, char** av, char** sys_env)
 	cleanup(&pipex, &files);
 }
 
-static void cleanup(t_pipex* pipex, t_files* files)
+static void	cleanup(t_pipex *pipex, t_files *files)
 {
 	if (pipex)
 		cleanup_pipex_input(pipex);
@@ -60,7 +59,7 @@ static void cleanup(t_pipex* pipex, t_files* files)
 		close_files(files);
 }
 
-static void cleanup_exit(t_pipex* pipex, t_files* files, t_error error)
+static void	cleanup_exit(t_pipex *pipex, t_files *files, t_error error)
 {
 	cleanup(pipex, files);
 	ft_putstr_fd("Error:\n", STDERR_FILENO);
