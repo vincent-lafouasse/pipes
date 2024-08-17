@@ -26,9 +26,9 @@ int main(int ac, char** av, char** sys_env)
 		cleanup_exit(err);
 
 	if (ac == 2)
-		err = load_command(av[1], NULL, &env, &cmd);
+		err = load_command(av[1], NULL, 0, &env, &cmd);
 	else
-		err = load_command(av[1], av + 2, &env, &cmd);
+		err = load_command(av[1], av + 2, ac - 2, &env, &cmd);
 	if (err != NO_ERROR)
 		cleanup_exit(err);
 
