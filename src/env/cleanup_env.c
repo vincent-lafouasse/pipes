@@ -15,5 +15,6 @@ void cleanup_env(t_env* env)
 		free(env->path[i]);
 		i++;
 	}
+	free(env->path);
 	env->path = NULL;
 }
