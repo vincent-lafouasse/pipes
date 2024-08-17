@@ -1,3 +1,4 @@
+#include <sys/fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,6 +8,8 @@
 #include "command/t_command.h"
 
 #include "libft/ft_io.h"
+
+#include <fcntl.h>
 
 typedef struct s_pipex {
 	t_command* cmd1;
@@ -86,6 +89,9 @@ int main(int ac, char** av, char** sys_env)
 	t_command cmd;
 	load_command(av[1], &env, &cmd);
 	
+	int fd = open("local_log.txt", O_WRONLY | O_CREAT, 0777);
+	dup2(fd, STDOUT_FILENO);
+
 	execve(cmd.location, cmd.args, sys_env);
 }
 
