@@ -43,16 +43,13 @@ t_error load_pipex_input(int ac, char** av, char** sys_env, t_pipex* out)
 		return err;
 
 	out->cmd1 = malloc(sizeof(*out->cmd1));
-	if (!out->cmd1)
+	out->cmd2 = malloc(sizeof(*out->cmd2));
+	if (!out->cmd1 || !out->cmd2)
 		return OOM_ERROR;
 
 	err = load_command(av[2], &out->env, out->cmd1);
 	if (err != NO_ERROR)
 		return err;
-
-	out->cmd2 = malloc(sizeof(*out->cmd2));
-	if (!out->cmd2)
-		return OOM_ERROR;
 
 	return load_command(av[3], &out->env, out->cmd2);
 }
