@@ -10,6 +10,7 @@ const char* reprs[] = {
 	"FILE NOT FOUND",
 	"FILE NOT EXEC",
 	"OOM",
+	"BAD_N_ARGS_ERROR",
 };
 
 const char* error_repr(t_error err)
