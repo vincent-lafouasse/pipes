@@ -31,7 +31,7 @@ all: build
 .PHONY: run
 run: build
 	rm -rf local_out
-	./$(NAME) Makefile "grep build" "grep test" local_out
+	./$(NAME) src/main.c "cat" "grep include" local_out 
 
 .PHONY: build
 build: $(NAME)
