@@ -12,6 +12,8 @@ typedef struct s_env {
 typedef struct s_command {
 	const char** name;
 	const t_env* env;
+	int in_fd;
+	int out_fd;
 } t_command;
 
 static void cleanup_exit(t_error error);
@@ -23,7 +25,8 @@ int main(int ac, char** av, char** env)
 
 	char* args[] = {"-l", NULL};
 
-	execve("/bin/ls", args, env);
+	if (execve("/bin/ls", args, env) == -1)
+		cleanup_exit(DUMMY_ERROR);
 }
 
 static void cleanup_exit(t_error error)
