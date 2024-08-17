@@ -20,3 +20,10 @@ void close_pipe_input(t_files* files);
 void close_pipe_output(t_files* files);
 void close_infile(t_files* files);
 void close_outfile(t_files* files);
+
+typedef struct s_redirect {
+	int from;
+	int to;
+} t_redirect;
+
+void redirect(t_redirect fds);
