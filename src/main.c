@@ -11,6 +11,23 @@
 
 #include <fcntl.h>
 
+typedef struct s_io_files
+{
+	int in_fd;
+	int out_fd;
+} t_io_files;
+
+t_error open_files(const char* infile, const char* outfile, t_io_files* files)
+{
+	files->in_fd = open(infile, O_RDONLY);
+	if (files->in_fd < 0)
+		return DUMMY_ERROR;
+	files->out_fd = open(outfile, O_WRONLY | O_CREAT, 0777);
+	if (files->out_fd < 0)
+		return close(files->in_fd), DUMMY_ERROR;
+	return NO_ERROR;
+}
+
 typedef struct s_pipex {
 	t_command* cmd1;
 	t_command* cmd2;
@@ -54,6 +71,8 @@ t_error load_pipex_input(int ac, char** av, char** sys_env, t_pipex* out)
 	if (err != NO_ERROR)
 		return err;
 
+	out->infile = av[1];
+	out->outfile = av[4];
 	return load_command(av[3], &out->env, out->cmd2);
 }
 
@@ -62,7 +81,6 @@ static void cleanup_exit(t_error error);
 
 int main(int ac, char** av, char** sys_env)
 {
-	/*
 	t_pipex pipex;
 	t_error err;
 
@@ -70,29 +88,24 @@ int main(int ac, char** av, char** sys_env)
 	if (err != NO_ERROR)
 		cleanup_exit(err);
 
-	pid_t pid = fork();
+	t_io_files files;
+	err = open_files(pipex.infile, pipex.outfile, &files);
+	if (err != NO_ERROR)
+		cleanup_exit(err);
 
+	pid_t pid = fork();
 	if (pid == 0)
 	{
+		dup2(files.in_fd, STDIN_FILENO);
 		execve(pipex.cmd1->location, pipex.cmd1->args, sys_env);
 	}
 	else
 	{
 		wait(NULL);
 		printf("\n");
+		dup2(files.out_fd, STDOUT_FILENO);
 		execve(pipex.cmd2->location, pipex.cmd2->args, sys_env);
 	}
-	*/
-	t_env env;
-	load_env(sys_env, &env);
-
-	t_command cmd;
-	load_command(av[1], &env, &cmd);
-	
-	int fd = open("local_log.txt", O_WRONLY | O_CREAT, 0777);
-	dup2(fd, STDOUT_FILENO);
-
-	execve(cmd.location, cmd.args, sys_env);
 }
 
 static void cleanup(void)
