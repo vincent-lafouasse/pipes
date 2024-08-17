@@ -30,6 +30,7 @@ all: build
 
 .PHONY: run
 run: build
+	rm -rf local_out
 	./$(NAME) Makefile "grep build" "grep test" local_out
 
 .PHONY: build
