@@ -18,4 +18,5 @@ void cleanup_command(t_command* command)
 	}
 	free(command->args);
 	command->args = NULL;
+	free(command);
 }
