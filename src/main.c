@@ -86,8 +86,8 @@ t_error load_pipex_input(int ac, char** av, char** sys_env, t_pipex* out)
 	return load_command(av[3], &out->env, out->cmd2);
 }
 
-static void cleanup(void);
-static void cleanup_exit(t_error error);
+static void cleanup(t_pipex* pipex, t_io_files* files);
+static void cleanup_exit(t_pipex* pipex, t_io_files* files, t_error error);
 
 int main(int ac, char** av, char** sys_env)
 {
@@ -96,12 +96,12 @@ int main(int ac, char** av, char** sys_env)
 
 	err = load_pipex_input(ac, av, sys_env, &pipex);
 	if (err != NO_ERROR)
-		cleanup_exit(err);
+		cleanup_exit(&pipex, NULL, err);
 
 	t_io_files files;
 	err = open_files(pipex.infile, pipex.outfile, &files);
 	if (err != NO_ERROR)
-		cleanup_exit(err);
+		cleanup_exit(&pipex, NULL, err);
 
 	pid_t pid = fork();
 	if (pid == 0)
@@ -116,14 +116,18 @@ int main(int ac, char** av, char** sys_env)
 		dup2(files.out_fd, STDOUT_FILENO);
 		execve(pipex.cmd2->location, pipex.cmd2->args, sys_env);
 	}
+	cleanup(&pipex, &files);
 }
 
-static void cleanup(void)
-{}
-
-static void cleanup_exit(t_error error)
+static void cleanup(t_pipex* pipex, t_io_files* files)
 {
-	cleanup();
+	(void)pipex;
+	(void)files;
+}
+
+static void cleanup_exit(t_pipex* pipex, t_io_files* files, t_error error)
+{
+	cleanup(pipex, files);
 	ft_putstr_fd("Error:\n", 2);
 	ft_putstr_fd(error_repr(error), 2);
 	exit(EXIT_FAILURE);
