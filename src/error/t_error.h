@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 00:10:37 by poss              #+#    #+#             */
-/*   Updated: 2024/08/17 14:44:53 by poss             ###   ########.fr       */
+/*   Updated: 2024/08/17 14:48:04 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ enum e_error
 	NO_PATH_FOUND_ERROR,
 	FILE_NOT_FOUND_ERROR,
 	FILE_NOT_EXEC_ERROR,
+	OOM_ERROR,
 };
 
 #endif
