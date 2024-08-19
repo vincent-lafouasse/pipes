@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 00:10:37 by poss              #+#    #+#             */
-/*   Updated: 2024/08/17 17:00:48 by poss             ###   ########.fr       */
+/*   Updated: 2024/08/19 14:43:51 by vlafouas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ enum e_error
 	FILE_NOT_EXEC_ERROR,
 	OOM_ERROR,
 	BAD_N_ARGS_ERROR,
+	CANT_OPEN_FILE_ERROR,
 };
 
 const char* error_repr(t_error err);
