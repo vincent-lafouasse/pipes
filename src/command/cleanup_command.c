@@ -10,13 +10,16 @@ void cleanup_command(t_command* command)
 		return ;
 	free(command->location);
 	command->location = NULL;
-	i = 0;
-	while (command->args[i])
+	if (command->args)
 	{
-		free(command->args[i]);
-		i++;
+		i = 0;
+		while (command->args[i])
+		{
+			free(command->args[i]);
+			i++;
+		}
+		free(command->args);
 	}
-	free(command->args);
 	command->args = NULL;
 	free(command);
 }
