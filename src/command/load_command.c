@@ -56,8 +56,6 @@ static char* full_path(const char* dir, const char* file)
 	if (!dir_with_slash)
 		return NULL;
 	path = ft_strjoin(dir_with_slash, file);
-	if (!path)
-		return NULL;
 	free(dir_with_slash);
 	return path;
 }
