@@ -38,8 +38,7 @@ all: build
 
 .PHONY: run
 run: build
-	rm -rf local_out
-	./$(NAME) src/main.c "cat" "grep include" local_out 
+	./$(NAME) src/main.c "cat" "grep include" /dev/stdout
 
 .PHONY: build
 build: $(NAME)
