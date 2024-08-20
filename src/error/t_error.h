@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 00:10:37 by poss              #+#    #+#             */
-/*   Updated: 2024/08/20 22:11:15 by poss             ###   ########.fr       */
+/*   Updated: 2024/08/20 22:15:27 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ enum					e_error
 	BAD_N_ARGS_ERROR,
 	CANT_OPEN_FILE_ERROR,
 	EXEC_ERROR,
+	UNREACHABLE,
 };
 
 const char				*error_repr(t_error err);
