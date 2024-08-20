@@ -6,10 +6,11 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:32:18 by poss              #+#    #+#             */
-/*   Updated: 2024/08/20 12:32:46 by poss             ###   ########.fr       */
+/*   Updated: 2024/08/20 20:40:53 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "error/t_error.h"
 #include "libft/ft_string.h"
 #include "t_command.h"
 #include <stdlib.h>
@@ -55,7 +56,7 @@ static t_error	locate_command(const char *name, const t_env *env,
 		free(candidate);
 		dir = env->path[++i];
 	}
-	return (FILE_NOT_FOUND_ERROR);
+	return (COMMAND_NOT_AVAILABLE_ERROR);
 }
 
 static char	*full_path(const char *dir, const char *file)

@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:32:37 by poss              #+#    #+#             */
-/*   Updated: 2024/08/20 12:32:41 by poss             ###   ########.fr       */
+/*   Updated: 2024/08/20 20:40:19 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ const char	*reprs[] = {
 	"NULL_PARAM_ERROR",
 	"DUMMY_ERROR",
 	"NO_PATH_FOUND_ERROR",
-	"FILE_NOT_FOUND_ERROR",
+	"COMMAND_NOT_AVAILABLE_ERROR",
 	"FILE_NOT_EXEC_ERROR",
 	"OOM_ERROR",
 	"BAD_N_ARGS_ERROR",
