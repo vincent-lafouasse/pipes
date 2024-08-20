@@ -6,5 +6,4 @@ target
 
 local*
 *.a
-**/exec*
 pipex
