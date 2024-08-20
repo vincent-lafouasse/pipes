@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:30:24 by poss              #+#    #+#             */
-/*   Updated: 2024/08/20 18:58:42 by poss             ###   ########.fr       */
+/*   Updated: 2024/08/20 20:21:20 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ t_error	load_pipex_input(int ac, char **av, char **sys_env, t_pipex *out)
 {
 	t_error	err;
 
-	out->cmd1 = malloc(sizeof(*out->cmd1));
-	out->cmd2 = malloc(sizeof(*out->cmd2));
-	out->env = (t_env){.sys_env = NULL, .path = NULL};
-	if (!out->cmd1 || !out->cmd2)
-		return (OOM_ERROR);
+	*out = t_pipex_init();
 	if (ac != 5)
 		return (BAD_N_ARGS_ERROR);
-	*out = t_pipex_init();
+	out->cmd1 = malloc(sizeof(*out->cmd1));
+	out->cmd2 = malloc(sizeof(*out->cmd2));
+	if (!out->cmd1 || !out->cmd2)
+		return (OOM_ERROR);
 	err = load_env(sys_env, &out->env);
 	if (err != NO_ERROR)
 		return (err);
