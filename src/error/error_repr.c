@@ -29,22 +29,22 @@ const char	*reprs[] = {
 const char	*error_repr(t_error err)
 {
 	if (err == FORK_ERROR)
-		return "Error spawning new process";
+		return ("Error spawning new process");
 	if (err == PIPE_ERROR)
-		return "Error opening UNIX pipe";
+		return ("Error opening UNIX pipe");
 	if (err == NULL_PARAM_ERROR)
-		return "Parameter was NULL";
+		return ("Parameter was NULL");
 	if (err == NO_PATH_FOUND_ERROR)
-		return "PATH not found in system env";
+		return ("PATH not found in system env");
 	if (err == COMMAND_NOT_AVAILABLE_ERROR)
-		return "Couldn't access command";
+		return ("Couldn't access command");
 	if (err == FILE_NOT_EXEC_ERROR)
-		return "Command is not executable";
+		return ("Command is not executable");
 	if (err == OOM_ERROR)
-		return "Out of memory";
+		return ("Out of memory");
 	if (err == BAD_N_ARGS_ERROR)
-		return "Usage ./pipex infile cmd1 cmd2 outfile";
+		return ("Usage ./pipex infile cmd1 cmd2 outfile");
 	if (err == CANT_OPEN_FILE_ERROR)
-		return "Error opening file";
-	return "Unrecognised error";
+		return ("Error opening file");
+	return ("Unrecognised error");
 }
