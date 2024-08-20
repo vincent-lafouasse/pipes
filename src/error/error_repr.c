@@ -6,7 +6,7 @@
 /*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 12:32:37 by poss              #+#    #+#             */
-/*   Updated: 2024/08/20 20:47:24 by poss             ###   ########.fr       */
+/*   Updated: 2024/08/20 22:11:43 by poss             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ const char	*error_repr(t_error err)
 		return ("Usage ./pipex infile cmd1 cmd2 outfile");
 	if (err == CANT_OPEN_FILE_ERROR)
 		return ("Error opening file");
+	if (err == EXEC_ERROR)
+		return ("Error executing command on child process");
 	return ("Unrecognised error");
 }
