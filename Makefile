@@ -4,13 +4,21 @@ SRC_DIR = src
 BUILD_DIR = build
 INCLUDE_DIR = src
 
-SRCS = $(shell find "$(SRC_DIR)" -name '*.c')
+SRCS = src/main.c
+SRCS += src/t_pipex/load_pipex_input.c src/t_pipex/cleanup_pipex_input.c
+SRCS += src/files/close_fd.c src/files/open_files.c src/files/close_files.c src/files/redirect.c
+SRCS += src/env/cleanup_env.c src/env/load_env.c
+SRCS += src/command/cleanup_command.c src/command/load_command.c
+SRCS += src/execute/execute.c
+SRCS += src/error/error_repr.c
+SRCS += src/log/log.c
+
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
 CC        = cc
 CFLAGS    = -Wall -Wextra -g3
-#CFLAGS   += -Werror
+CFLAGS   += -Werror
 CPPFLAGS  = -I$(INCLUDE_DIR)
 CPPFLAGS += -MMD -MP
 
