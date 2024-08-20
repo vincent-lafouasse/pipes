@@ -20,7 +20,7 @@ t_error	open_files(const char *infile, const char *outfile, t_files *files)
 	files->in_fd = open(infile, O_RDONLY);
 	if (files->in_fd < 0)
 		return (CANT_OPEN_FILE_ERROR);
-	files->out_fd = open(outfile, O_WRONLY | O_CREAT, 0666);
+	files->out_fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (files->out_fd < 0)
 	{
 		close(files->in_fd);
