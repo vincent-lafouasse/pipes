@@ -1,9 +1,22 @@
-#pragma once
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_files.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/20 12:31:24 by poss              #+#    #+#             */
+/*   Updated: 2024/08/20 12:31:39 by poss             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "error/t_error.h"
+#ifndef T_FILES_H
+# define T_FILES_H
 
-#define READ 0
-#define WRITE 1
+# include "error/t_error.h"
+
+# define READ 0
+# define WRITE 1
 
 typedef struct s_files
 {
@@ -28,3 +41,5 @@ typedef struct s_redirect
 }		t_redirect;
 
 void	redirect(t_redirect fds);
+
+#endif

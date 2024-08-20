@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   log.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: poss <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/20 12:31:43 by poss              #+#    #+#             */
+/*   Updated: 2024/08/20 12:32:45 by poss             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "log.h"
 #include <stdio.h>
 
@@ -28,6 +40,8 @@ void	log_env(const t_env *env)
 
 void	log_cmd(const t_command *cmd)
 {
+	size_t	i;
+
 	if (!cmd)
 		return ;
 	printf("path:\n%s\n", cmd->location);
@@ -37,6 +51,10 @@ void	log_cmd(const t_command *cmd)
 		printf("None\n");
 		return ;
 	}
-	for (int i = 0; cmd->args[i] != NULL; i++)
+	i = 0;
+	while (cmd->args[i] != NULL)
+	{
 		printf("%s\n", cmd->args[i]);
+		i++;
+	}
 }
