@@ -1,10 +1,9 @@
 #include "t_command.h"
-
 #include <stdlib.h>
 
-void cleanup_command(t_command* command)
+void	cleanup_command(t_command *command)
 {
-	int i;
+	int	i;
 
 	if (!command)
 		return ;

@@ -1,8 +1,8 @@
-#include "t_pipex/t_pipex.h"
-#include "files/t_files.h"
-#include "execute/execute.h"
 #include "error/t_error.h"
+#include "execute/execute.h"
+#include "files/t_files.h"
 #include "libft/ft_io.h"
+#include "t_pipex/t_pipex.h"
 #include <stdlib.h>
 
 #define STDERR 2
@@ -19,11 +19,9 @@ int	main(int ac, char **av, char **sys_env)
 	err = load_pipex_input(ac, av, sys_env, &pipex);
 	if (err != NO_ERROR)
 		cleanup_exit(&pipex, NULL, err);
-
 	err = open_files(pipex.infile, pipex.outfile, &files);
 	if (err != NO_ERROR)
 		cleanup_exit(&pipex, NULL, err);
-
 	err = execute(&pipex, &files);
 	if (err != NO_ERROR)
 		cleanup_exit(&pipex, &files, err);

@@ -1,6 +1,6 @@
 #include "t_error.h"
 
-const char* reprs[] = {
+const char	*reprs[] = {
 	"NO_ERROR",
 	"FORK_ERROR",
 	"PIPE_ERROR",
@@ -14,7 +14,7 @@ const char* reprs[] = {
 	"CANT_OPEN_FILE_ERROR",
 };
 
-const char* error_repr(t_error err)
+const char	*error_repr(t_error err)
 {
-	return reprs[err];
+	return (reprs[err]);
 }

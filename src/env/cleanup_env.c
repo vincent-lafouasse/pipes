@@ -1,10 +1,9 @@
 #include "t_env.h"
-
 #include <stdlib.h>
 
-void cleanup_env(t_env* env)
+void	cleanup_env(t_env *env)
 {
-	int i;
+	int	i;
 
 	if (!env)
 		return ;

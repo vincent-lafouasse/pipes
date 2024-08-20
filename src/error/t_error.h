@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #ifndef T_ERROR_H
-#define T_ERROR_H
+# define T_ERROR_H
 
-typedef enum e_error t_error;
-enum e_error
+typedef enum e_error	t_error;
+enum					e_error
 {
 	NO_ERROR,
 	FORK_ERROR,
@@ -29,6 +29,6 @@ enum e_error
 	CANT_OPEN_FILE_ERROR,
 };
 
-const char* error_repr(t_error err);
+const char				*error_repr(t_error err);
 
 #endif
