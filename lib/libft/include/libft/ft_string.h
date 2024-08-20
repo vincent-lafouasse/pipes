@@ -23,6 +23,6 @@ char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
-bool	ft_str_starts_with(const char* s, const char* pattern);
+bool	ft_str_starts_with(const char *s, const char *pattern);
 
 #endif

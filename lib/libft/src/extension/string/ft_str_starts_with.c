@@ -13,18 +13,18 @@
 #include "libft/ft_string.h"
 #include "libft/string.h"
 
-bool	ft_str_starts_with(const char* s, const char* pattern)
+bool	ft_str_starts_with(const char *s, const char *pattern)
 {
 	if (!s || !pattern)
-		return false;
+		return (false);
 	if (ft_strlen(pattern) > ft_strlen(s))
-		return false;
+		return (false);
 	while (*pattern)
 	{
 		if (*pattern != *s)
-			return false;
+			return (false);
 		s++;
 		pattern++;
 	}
-	return true;
+	return (true);
 }
