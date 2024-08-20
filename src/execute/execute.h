@@ -17,6 +17,6 @@
 # include "files/t_files.h"
 # include "t_pipex/t_pipex.h"
 
-t_error	execute(t_pipex *pipex, t_files *files);
+t_error	execute(t_pipex *pipex, t_files *files, int *out_status);
 
 #endif
