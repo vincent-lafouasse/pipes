@@ -16,6 +16,7 @@
 #include "libft/ft_io.h"
 #include "t_pipex/t_pipex.h"
 #include <stdlib.h>
+#include <sys/wait.h>
 
 #define STDERR 2
 
@@ -27,6 +28,7 @@ int	main(int ac, char **av, char **sys_env)
 	t_pipex	pipex;
 	t_files	files;
 	t_error	err;
+	int		last_process_status;
 
 	err = load_pipex_input(ac, av, sys_env, &pipex);
 	if (err != NO_ERROR)
@@ -34,10 +36,11 @@ int	main(int ac, char **av, char **sys_env)
 	err = open_files(pipex.infile, pipex.outfile, &files);
 	if (err != NO_ERROR)
 		cleanup_exit(&pipex, NULL, err);
-	err = execute(&pipex, &files);
+	err = execute(&pipex, &files, &last_process_status);
 	if (err != NO_ERROR)
 		cleanup_exit(&pipex, &files, err);
 	cleanup(&pipex, &files);
+	return (WEXITSTATUS(last_process_status));
 }
 
 static void	cleanup(t_pipex *pipex, t_files *files)

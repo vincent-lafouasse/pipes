@@ -19,7 +19,7 @@
 static t_error	launch_process1(t_pipex *pipex, t_files *files);
 static t_error	launch_process2(t_pipex *pipex, t_files *files);
 
-t_error	execute(t_pipex *pipex, t_files *files)
+t_error	execute(t_pipex *pipex, t_files *files, int *out_status)
 {
 	pid_t	pid[2];
 
@@ -38,7 +38,7 @@ t_error	execute(t_pipex *pipex, t_files *files)
 	close_fd(&files->pipe[0]);
 	close_fd(&files->pipe[1]);
 	waitpid(pid[0], NULL, 0);
-	waitpid(pid[1], NULL, 0);
+	waitpid(pid[1], out_status, 0);
 	return (NO_ERROR);
 }
 
